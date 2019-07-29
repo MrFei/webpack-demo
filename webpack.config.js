@@ -16,7 +16,18 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: '[name].[chunkhash:8].bundle.js',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, isEnvProd ? 'build' : 'dev_build'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
